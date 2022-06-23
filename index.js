@@ -7,9 +7,18 @@ const cors = require("cors");
 // dotenv.config();
 require('dotenv').config();
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 const app = express();
+
+// const connectDB = async () => {
+//   const conn = await mongoose.connect("YOUR_MONGODB_URI", {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   });
+
+//   console.log(`MongoDB Connected: ${conn.connection.host}`);
+// };
 
 mongoose
   .connect(process.env.MONGODB_URL, {
@@ -24,7 +33,8 @@ mongoose
   });
 
 // middlewares
-app.use(cors());
+app.use(cors({ origin: "*" }));
+// app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
